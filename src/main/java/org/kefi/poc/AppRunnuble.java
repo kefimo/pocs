@@ -37,16 +37,29 @@ public class AppRunnuble {
 				//ExecutorService service =  Executors.newFixedThreadPool(5);
 				//ExecutorService service =  Executors.newFixedThreadPool(3);
 				ExecutorService service =  Executors.newFixedThreadPool(10);
-			//	service.invokeAll(listRunnable);
+			//	service.invokeAll(listR
+				List<Future> results = new ArrayList<Future>();
 				for(int i =1;i<=9;i++)
 					{
-					service.submit(runs);
+				Future result = service.submit(runs);
+				results.add(result); 
 					}
 				
+				results.stream().forEach(future -> {
+					try {
+						future.get();
+					} catch (InterruptedException | ExecutionException e) {
+						// TODO Auto-generated catch block
+					}
+				}
+				);
+				
+				 service.shutdown();
 				 Instant end = Instant.now();
 			       Duration duration= Duration.between(start, end);
 			       System.out.println("Sequential duration: "+duration.getSeconds()+" secondes ");
 			  
+			      
 		    }
 	
 }

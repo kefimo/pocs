@@ -28,7 +28,7 @@ public class AppCallable {
 		       Instant start = Instant.now();
 			
 			//ExecutorService service =  Executors.newFixedThreadPool(5);
-			ExecutorService service =  Executors.newFixedThreadPool(3);
+			ExecutorService service =  Executors.newFixedThreadPool(10);
 			//ExecutorService service =  Executors.newFixedThreadPool(10);
 			List<Future<Integer>> listFutures = service.invokeAll(listCallables);
 			if(listFutures!=null)
@@ -42,6 +42,7 @@ public class AppCallable {
 				});
 				
 			}
+			 service.shutdown();
 			 Instant end = Instant.now();
 		       Duration duration= Duration.between(start, end);
 		       System.out.println("Sequential duration: "+duration.getSeconds()+" secondes ");
